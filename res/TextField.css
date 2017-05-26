@@ -1,0 +1,14 @@
+.text-field {
+    -fx-font: 18 oblique;
+    -fx-text-fill: white;
+    -fx-background-image: url("m.png");
+    -fx-background-size: 100%;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#goodAnswer {
+    -fx-background-image: url("mz.png");
+}

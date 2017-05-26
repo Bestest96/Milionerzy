@@ -1,0 +1,4 @@
+#mainMenu, #addQuestion, #game, #endGame, #friendScene {
+    -fx-background-image: url("mainBackground.jpg");
+    -fx-background-size: stretch;
+}

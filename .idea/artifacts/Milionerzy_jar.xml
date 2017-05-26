@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Milionerzy:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Milionerzy_jar</output-path>
+    <root id="archive" name="Milionerzy.jar">
+      <element id="module-output" name="Milionerzy" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ojdbc8.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

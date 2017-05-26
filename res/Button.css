@@ -1,0 +1,28 @@
+.button {
+    -fx-opacity: 1.0;
+    -fx-font: 18 oblique;
+    -fx-text-fill: white;
+    -fx-background-size: 100%;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.button:disabled {
+    -fx-opacity: 1.0;
+}
+
+#menuButton, #gameButton {
+    -fx-background-image: url("m.png");
+}
+
+#menuButton:focused, #gameButton:focused, #selectedAnswer {
+    -fx-background-image: url("mp.png");
+}
+
+#menuButton:hover, #gameButton:hover, #correctAnswer {
+    -fx-background-image: url("mz.png");
+}
+
+
