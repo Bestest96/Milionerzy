@@ -13,15 +13,15 @@
     -fx-opacity: 1.0;
 }
 
-#menuButton, #gameButton {
+#menuButton, #gameButton, #resignButton {
     -fx-background-image: url("m.png");
 }
 
-#menuButton:focused, #gameButton:focused, #selectedAnswer {
+#menuButton:focused, #gameButton:focused, #resignButton:focused, #selectedAnswer {
     -fx-background-image: url("mp.png");
 }
 
-#menuButton:hover, #gameButton:hover, #correctAnswer {
+#menuButton:hover, #gameButton:hover, #resignButton:hover, #correctAnswer {
     -fx-background-image: url("mz.png");
 }
 

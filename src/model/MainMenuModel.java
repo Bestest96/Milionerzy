@@ -3,7 +3,7 @@ package model;
 /**
  * The {@link model.MainMenuModel} class represents the data for the main menu screen (mainly button labels).
  */
-public class MainMenuModel {
+final class MainMenuModel {
     /**
      * A text for a button responsible for starting the main game.
      */
@@ -20,7 +20,7 @@ public class MainMenuModel {
     /**
      * {@link model.MainMenuModel} class constructor
      */
-    public MainMenuModel() {
+    MainMenuModel() {
         playText = "Graj!";
         addQText = "Dodaj pytanie";
         exitText = "Wyjdź";
@@ -30,7 +30,7 @@ public class MainMenuModel {
      * A getter for a play button text.
      * @return a play button text.
      */
-    public String getPlayText() {
+    String getPlayText() {
         return playText;
     }
 
@@ -38,7 +38,7 @@ public class MainMenuModel {
      * A getter for an add question button text.
      * @return an add question button text.
      */
-    public String getAddQText() {
+    String getAddQText() {
         return addQText;
     }
 
@@ -46,7 +46,7 @@ public class MainMenuModel {
      * A getter for an exit application text.
      * @return an exit application text.
      */
-    public String getExitText() {
+    String getExitText() {
         return exitText;
     }
 }

@@ -15,14 +15,32 @@ public class GameView {
     /**
      * A scene containing all {@link view.GameView} object components
      */
-    private Scene scene;
-    private Button[] answers;
-    private Button[] lifelines;
-    private Button resign;
-    private Label question;
-    private Label[] money;
+    private final Scene scene;
+    /**
+     * An array of buttons used to check answers.
+     */
+    private final Button[] answers;
+    /**
+     * An array of lifelines used to use lifelines.
+     */
+    private final Button[] lifelines;
+    /**
+     * A button used to resign from further play.
+     */
+    private final Button resign;
+    /**
+     * A label used to display the question.
+     */
+    private final Label question;
+    /**
+     * An array of labels used to describe the money prizes.
+     */
+    private final Label[] money;
 
-    public GameView() {
+    /**
+     * A {@link view.GameView} class constructor.
+     */
+    GameView() {
         HBox root = new HBox();
         VBox qst = new VBox();
         HBox AB = new HBox();
@@ -68,6 +86,12 @@ public class GameView {
             money[i] = createMoneyLabel();
             info.getChildren().add(money[i]);
         }
+        resign = new Button();
+        resign.setPrefWidth(View.getStage().getWidth()/3.0);
+        resign.setPrefHeight(View.getStage().getHeight()/15.0);
+        resign.getStylesheets().add("Button.css");
+        resign.setId("resignButton");
+        info.getChildren().add(resign);
         info.setAlignment(Pos.CENTER);
         root.getChildren().add(info);
         root.setId("game");
@@ -75,26 +99,58 @@ public class GameView {
         scene.getStylesheets().add("Scene.css");
     }
 
+    /**
+     * A getter for the question label.
+     * @return the question label.
+     */
     public Label getQuestion() {
         return question;
     }
 
+    /**
+     * A gettr for the answer buttons.
+     * @return an array of answer buttons.
+     */
     public Button[] getAnswers() {
         return answers;
     }
 
+    /**
+     * A getter for the money labels.
+     * @return an array of money labels.
+     */
     public Label[] getMoney() {
         return money;
     }
 
+    /**
+     * A getter for the lifeline buttons.
+     * @return na array of lifeline buttons.
+     */
     public Button[] getLifelines() {
         return lifelines;
     }
 
+    /**
+     * A getter for the resign button.
+     * @return the resign button
+     */
+    public Button getResign() {
+        return resign;
+    }
+
+    /**
+     * A getter for the scene of the game view.
+     * @return the scene withe the game view's look.
+     */
     public Scene getScene() {
         return scene;
     }
 
+    /**
+     * Creates an answer button with the appropriate style.
+     * @return a created answer button.
+     */
     private Button createAnswerButton() {
         Button btn = new Button();
         btn.getStylesheets().add("Button.css");
@@ -105,6 +161,10 @@ public class GameView {
         return btn;
     }
 
+    /**
+     * Creates a money label with an appropriate style.
+     * @return a created money label.
+     */
     private Label createMoneyLabel() {
         Label lb = new Label();
         lb.setPrefWidth(View.getStage().getWidth()/9.0);
@@ -115,6 +175,10 @@ public class GameView {
         return lb;
     }
 
+    /**
+     * Creates a question label.
+     * @return a created question label.
+     */
     private Label createQuestionLabel() {
         Label text = new Label();
         text.getStylesheets().add("Label.css");
@@ -127,6 +191,9 @@ public class GameView {
         return text;
     }
 
+    /**
+     * Resets the state of the view in order to start again.
+     */
     public void resetState() {
         for (Button b : answers) {
             b.setText("");
@@ -137,17 +204,24 @@ public class GameView {
             b.setDisable(false);
         for (Label l : money)
             l.setId("moneyLabel");
+        resign.setDisable(false);
         money[0].setId("currentQuestionLabel");
         money[1].setId("guaranteedMoneyLabel");
         money[6].setId("guaranteedMoneyLabel");
     }
 
+    /**
+     * Sets the disabled status for buttons.
+     * @param disable true or false - whether the buttons should be disabled or not.
+     * @param disableLifelines an array of booleans describing whether lifeline buttons should be affected.
+     */
     public void setDisabledButtons(Boolean disable, Boolean[] disableLifelines) {
         for (Button b : answers)
             b.setDisable(disable);
         for (int i = 0 ; i < 3 ; ++i)
             if (!disableLifelines[i])
                 lifelines[i].setDisable(disable);
+        resign.setDisable(disable);
 }
 
 }

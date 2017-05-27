@@ -8,28 +8,28 @@ import javafx.scene.layout.VBox;
 /**
  * The {@link view.MainMenuView} class represents the look of the main menu.
  */
-public class MainMenuView {
+public final class MainMenuView {
     /**
      * The scene containing main menu's components.
      */
-    private Scene scene;
+    private final Scene scene;
     /**
      * A button responsible for starting the game.
      */
-    private Button play;
+    private final Button play;
     /**
      * A button responsible for going to add question menu.
      */
-    private Button addQuestion;
+    private final Button addQuestion;
     /**
      * A button responsible for exiting the application.
      */
-    private Button exit;
+    private final Button exit;
 
     /**
      * {@link MainMenuView} class constructor.
      */
-    public MainMenuView() {
+    MainMenuView() {
         play = new Button();
         addQuestion = new Button();
         exit = new Button();

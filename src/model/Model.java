@@ -14,11 +14,11 @@ import java.util.function.Predicate;
 /**
  * The {@link model.Model} class represents the whole data and logic of an application.
  */
-public class Model {
+public final class Model {
     /**
      * An object of the {@link view.View} class to update displayed data on.
      */
-    private View view;
+    private final View view;
     /**
      * A clip to play looped tracks.
      */
@@ -30,25 +30,31 @@ public class Model {
     /**
      * An object representing the data for the main menu.
      */
-    private MainMenuModel mainMenuModel;
+    private final MainMenuModel mainMenuModel;
     /**
      * An object representing the data for the database.
      */
-    private DatabaseModel databaseModel;
+    private final DatabaseModel databaseModel;
     /**
      * An object representing the data for adding questions.
      */
-    private AddQuestionModel addQuestionModel;
+    private final AddQuestionModel addQuestionModel;
     /**
      * An object representing the data for the game.
      */
-    private GameModel gameModel;
-
-    private EndGameModel endGameModel;
-
-    private AudienceModel audienceModel;
-
-    private FriendModel friendModel;
+    private final GameModel gameModel;
+    /**
+     * An object representing the data for the end game.
+     */
+    private final EndGameModel endGameModel;
+    /**
+     * An object representing the data for the audience lifeline.
+     */
+    private final AudienceModel audienceModel;
+    /**
+     * An object representing the data for the friend lifeline.
+     */
+    private final FriendModel friendModel;
 
     /**
      * {@link model.Model} class constructor
@@ -201,13 +207,20 @@ public class Model {
             aqv.getDiff()[i].setText(aqm.getDiff()[i]);
     }
 
+    /**
+     * Sets the game view (money labels and resign button label).
+     */
     private void setGameView() {
         GameView gv = view.getGameView();
         GameModel gm = this.gameModel;
         for (int i = 0; i < 12; ++i)
             gv.getMoney()[i].setText(gm.getMoney()[i] + " zł");
+        gv.getResign().setText(gm.getResign());
     }
 
+    /**
+     * Sets the end game view (button labels).
+     */
     private void setEndGameView() {
         EndGameView egv = view.getEndGameView();
         EndGameModel egm = this.endGameModel;
@@ -215,6 +228,9 @@ public class Model {
         egv.getRestartGame().setText(egm.getRestartGame());
     }
 
+    /**
+     * Generates and uses the lifeline 50/50 in the game.
+     */
     public void lifeline5050() {
         gameModel.getLifelinesUsed()[0] = true;
         Predicate<Button> predicate = btn -> !btn.getText().substring(3).equals(gameModel.getCorrectAnswer());
@@ -228,7 +244,11 @@ public class Model {
         toDisable[disable[1]].setDisable(true);
     }
 
-    public void lifelineFriend() {
+    /**
+     * Generates and uses the friend lifieline in the game.
+     * @param used5050 describes if the 50/50 lifeline was used in the same question.
+     */
+    public void lifelineFriend(Boolean used5050) {
         gameModel.getLifelinesUsed()[1] = true;
         int correctIndex = -1;
         for (int i = 0; i < 4; ++i) {
@@ -239,7 +259,7 @@ public class Model {
             }
         }
         String help;
-        if (!gameModel.getLifelinesUsed()[0])
+        if (!gameModel.getLifelinesUsed()[0] || !used5050)
             help = friendModel.createFriendText(correctIndex, gameModel.getQuestionCounter(), -1);
         else {
             int otherAns = -1;
@@ -256,7 +276,11 @@ public class Model {
 
     }
 
-    public void lifelineAudience() {
+    /**
+     * Generates and uses the audience lifeline.
+     * @param used5050 describes if the 50/50 lifeline was used in the same question.
+     */
+    public void lifelineAudience(Boolean used5050) {
         gameModel.getLifelinesUsed()[2] = true;
         for (int i = 0; i < 4; ++i)
             audienceModel.getPercents()[i] = 0;
@@ -271,7 +295,7 @@ public class Model {
                 break;
             }
         }
-        if (!gameModel.getLifelinesUsed()[0])
+        if (!gameModel.getLifelinesUsed()[0] || !used5050)
             audienceModel.setPercents(correctIndex, gameModel.getQuestionCounter());
         else {
             int otherAns = -1;

@@ -13,36 +13,36 @@ import javafx.scene.layout.VBox;
 /**
  * The {@link view.AddQuestionView} class represents the look of a scene that is used to add questions.
  */
-public class AddQuestionView {
+public final class AddQuestionView {
     /**
      * A scene of the view representing the whole look.
      */
-    private Scene scene;
+    private final Scene scene;
     /**
      * A button responsible for returning to a main menu.
      */
-    private Button returnToMain;
+    private final Button returnToMain;
     /**
      * A button responsible for adding question to a database.
      */
-    private Button addToDB;
+    private final Button addToDB;
     /**
      * An array of radio buttons describing the difficulty of a question to be added.
      */
-    private RadioButton diff[];
+    private final RadioButton diff[];
     /**
      * A text field representing the question to be added.
      */
-    private TextField question;
+    private final TextField question;
     /**
      * An array of text fields representing answers to be added.
      */
-    private TextField answer[];
+    private final TextField answer[];
 
     /**
      * {@link view.AddQuestionView} class constructor
      */
-    public AddQuestionView() {
+    AddQuestionView() {
         VBox root = new VBox();
         VBox radioBox = new VBox();
         ToggleGroup tg = new ToggleGroup();

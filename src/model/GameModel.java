@@ -1,12 +1,11 @@
 package model;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 /**
  * The {@link model.GameModel} class represents the data for the game.
  */
-public class GameModel {
+public final class GameModel {
     /**
      * A HashSet object storing all IDs of used questions to avoid repetition.
      */
@@ -19,15 +18,23 @@ public class GameModel {
      * A counter which describes the number of the actual question (from 0 to 11).
      */
     private byte questionCounter;
-
+    /**
+     * An array containing the money for each question.
+     */
     private final int[] money;
-
+    /**
+     * An array holding used lifelines.
+     */
     private Boolean[] lifelinesUsed;
+    /**
+     * A text for the resign button.
+     */
+    private final String resign;
 
     /**
      * The {@link model.GameModel} class constructor.
      */
-    public GameModel() {
+    GameModel() {
         usedID = new HashSet<>(12);
         correctAnswer = null;
         questionCounter = 0;
@@ -48,36 +55,76 @@ public class GameModel {
         lifelinesUsed[0] = false;
         lifelinesUsed[1] = false;
         lifelinesUsed[2] = false;
+        resign = "Rezygnuję";
     }
 
+    /**
+     * A getter for used ids in order not to repeat the question.
+     * @return a set of question ids that were used.
+     */
     public HashSet<Integer> getUsedID() {
         return usedID;
     }
 
+    /**
+     * A getter for money array.
+     * @return an array of money for questions.
+     */
     public int[] getMoney() {
         return money;
     }
 
+    /**
+     * A getter for the resign button label.
+     * @return the resign button label.
+     */
+    String getResign() {
+        return resign;
+    }
+
+    /**
+     * A getter for used lifelines.
+     * @return an array of booleans indicating used lifelines.
+     */
     public Boolean[] getLifelinesUsed() {
         return lifelinesUsed;
     }
 
+    /**
+     * A getter for the correct answer to the question.
+     * @return a correct answer to the question.
+     */
     public String getCorrectAnswer() {
         return correctAnswer;
     }
 
+    /**
+     * A setter for the correct answer to the question.
+     * @param correctAnswer a correct answet to be set.
+     */
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
 
+    /**
+     * A getter for the actual question counter.
+     * @return the actual question counter.
+     */
     public byte getQuestionCounter() {
         return questionCounter;
     }
 
+    /**
+     * A setter for the actual question counter.
+     * @param questionCounter  the value of question counter to be set.
+     */
     public void setQuestionCounter(byte questionCounter) {
         this.questionCounter = questionCounter;
     }
 
+    /**
+     * Resets the state of the model to start the game again.
+     */
     public void resetState() {
         usedID.clear();
         questionCounter = 0;

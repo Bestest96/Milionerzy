@@ -9,41 +9,35 @@ import java.awt.*;
 /**
  * The View class represents the actual look of an application and all the views to switch.
  */
-public class View {
+public final class View {
     /**
      * A stage at which all the scenes are displayed.
      */
     private static Stage stage;
     /**
-     * An actual displayed scene.
-     */
-    private Scene scene;
-    /**
-     * Width of an application window.
-     */
-    private double width;
-    /**
-     * Height of an application window.
-     */
-    private double height;
-    /**
      * An object representing the view of the main menu.
      */
-    private MainMenuView mainMenuView;
+    private final MainMenuView mainMenuView;
     /**
      * An object representing the view of the menu to add questions.
      */
-    private AddQuestionView addQuestionView;
+    private final AddQuestionView addQuestionView;
     /**
      * An object representing the game look.
      */
-    private GameView gameView;
-
-    private EndGameView endGameView;
-
+    private final GameView gameView;
+    /**
+     * An object representing the end game look.
+     */
+    private final EndGameView endGameView;
+    /**
+     * An object representing the audience view (bar chart, cannot be final due to bar chart bug).
+     */
     private AudienceView audienceView;
-
-    private FriendView friendView;
+    /**
+     * An object representing the friend view (his "advice").
+     */
+    private final FriendView friendView;
 
     /**
      * Sets the application's main stage.
@@ -75,22 +69,17 @@ public class View {
      * @param scene a scene to be displayed.
      */
     public void setActiveScene (Scene scene) {
-        this.scene = scene;
         stage.setScene(scene);
-        //stage.setFullScreen(true);
-        //stage.centerOnScreen();
         stage.show();
     }
 
     /**
      * Sets the dimensions of the application's window.
      */
-    public void setDimensions() {
+    private void setDimensions() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        width = dimension.width;
-        stage.setWidth(width);
-        height = dimension.height;
-        stage.setHeight(height);
+        stage.setWidth(dimension.width);
+        stage.setHeight(dimension.height);
     }
 
     /**
@@ -116,19 +105,32 @@ public class View {
     public GameView getGameView() {
         return gameView;
     }
-
+    /**
+     * A getter for an object representing the end game view.
+     * @return an object representing the end game view.
+     */
     public EndGameView getEndGameView() {
         return endGameView;
     }
-
+    /**
+     * A getter for an object representing the friend view.
+     * @return an object representing the friend view.
+     */
     public FriendView getFriendView() {
         return friendView;
     }
-
+    /**
+     * A getter for an object representing the audience view.
+     * @return an object representing the audience view.
+     */
     public AudienceView getAudienceView() {
         return audienceView;
     }
 
+    /**
+     * A setter for the audience view (due to buggy bar charts this has to be made this way).
+     * @param audienceView a new audience view to be set.
+     */
     public void setAudienceView(AudienceView audienceView) {
         this.audienceView = audienceView;
     }
@@ -137,7 +139,7 @@ public class View {
      * A getter for an application's main scene.
      * @return an application's main scene.
      */
-    public static Stage getStage() {
+    static Stage getStage() {
         return stage;
     }
 

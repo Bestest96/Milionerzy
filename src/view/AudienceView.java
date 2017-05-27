@@ -8,13 +8,25 @@ import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
 /**
- * Created by Luki on 24.05.2017.
+ * The {@link view.AudienceView} class represents the audience poll look after voting.
  */
-public class AudienceView {
-    private Stage chartStage;
-    private BarChart<String, Number> poll;
-    private XYChart.Series<String, Number> series;
+public final class AudienceView {
+    /**
+     * A stage to display the chart.
+     */
+    private final Stage chartStage;
+    /**
+     * A bar chart which represents the whole look of the poll.
+     */
+    private final BarChart<String, Number> poll;
+    /**
+     * The series of data to represent percents gathered by each answer.
+     */
+    private final XYChart.Series<String, Number> series;
 
+    /**
+     * An {@link view.AudienceView} class constructor.
+     */
     public AudienceView() {
         chartStage = new Stage();
         chartStage.setTitle("Wyniki publiczności");
@@ -39,14 +51,25 @@ public class AudienceView {
         chartStage.setAlwaysOnTop(true);
     }
 
+    /**
+     * A getter for the poll.
+     * @return the poll.
+     */
     public BarChart<String, Number> getPoll() {
         return poll;
     }
 
+    /**
+     * A getter for the series.
+     * @return the series of the chart.
+     */
     public XYChart.Series<String, Number> getSeries() {
         return series;
     }
 
+    /**
+     * The method that displays the chart.
+     */
     public void display() {
         chartStage.showAndWait();
     }

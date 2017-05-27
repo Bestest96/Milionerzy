@@ -12,7 +12,7 @@
     -fx-background-image: url("m.png");
 }
 
-#endGameLabel, #friendLabel {
+#friendLabel {
     -fx-text-fill: black;
 }
 
@@ -24,4 +24,9 @@
 #guaranteedMoneyLabel {
     -fx-text-fill: white;
     -fx-background-image: url("mz.png");
+}
+
+#endGameLabel {
+    -fx-text-fill: black;
+    -fx-background-color: white;
 }

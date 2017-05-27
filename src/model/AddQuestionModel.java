@@ -4,24 +4,24 @@ package model;
  * The {@link model.AddQuestionModel} class represents data for a part of application
  * responsible for adding questions (mainly texts for buttons).
  */
-public class AddQuestionModel {
+final class AddQuestionModel {
     /**
      * A text for button responsible for adding questions to a database.
      */
-    private String addToDBText;
+    private final String addToDBText;
     /**
      * A text for button responsible for returning to main menu.
      */
-    private String returnToMenuText;
+    private final String returnToMenuText;
     /**
      * An array of 3 texts describing difficulty of a question to be added.
      */
-    private String diff[];
+    private final String diff[];
 
     /**
      * {@link model.AddQuestionModel} class constructor. Defines text for button labels.
      */
-    public AddQuestionModel() {
+    AddQuestionModel() {
         addToDBText = "Dodaj do bazy danych";
         returnToMenuText = "Wróć do menu";
         diff = new String[3];
@@ -34,21 +34,21 @@ public class AddQuestionModel {
      * A getter for a label for a button to add question.
      * @return a label for a button to add question.
      */
-    public String getAddToDBText() {
+    String getAddToDBText() {
         return addToDBText;
     }
     /**
      * A getter for a label for a button to return to main menu.
      * @return a label for a button to return to main menu.
      */
-    public String getReturnToMenuText() {
+    String getReturnToMenuText() {
         return returnToMenuText;
     }
     /**
      * A getter for difficulty labels.
      * @return an array of difficulty labels.
      */
-    public String[] getDiff() {
+    String[] getDiff() {
         return diff;
     }
 

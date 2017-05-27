@@ -13,15 +13,15 @@ import java.sql.SQLException;
 /**
  * The {@link controller.Controller} class defines reactions to user actions like button mouse click or keyboard input.
  */
-public class Controller {
+public final class Controller {
     /**
      * An object representing a {@link model.Model} object of an application to be controlled.
      */
-    private Model model;
+    private final Model model;
     /**
      * An object representing a {@link view.View} object of an application to be controlled.
      */
-    private View view;
+    private final View view;
 
     /**
      * Controller class constructor.
@@ -78,9 +78,7 @@ public class Controller {
             event.consume();
         });
 
-        mmv.getExitButton().setOnAction((event) -> {
-            exitApp();
-        });
+        mmv.getExitButton().setOnAction((event) -> exitApp());
 
         mmv.getExitButton().setOnKeyPressed((event) -> {
             KeyCode code = event.getCode();
@@ -161,7 +159,9 @@ public class Controller {
      */
     private void setGameActions() {
         GameView gv = this.view.getGameView();
-        for (Button b : gv.getAnswers()) {
+        for (int i = 0; i < 4; ++i) {
+            Button b = gv.getAnswers()[i];
+            final int x = i;
             b.setOnAction((event) -> {
                 checkAnswer(gv, b);
                 event.consume();
@@ -171,6 +171,48 @@ public class Controller {
                 KeyCode code = event.getCode();
                 if (code.equals(KeyCode.ENTER))
                     checkAnswer(gv, b);
+                else if (code.equals(KeyCode.UP)) {
+                    if (x - 2 >= 0)
+                        gv.getAnswers()[x - 2].requestFocus();
+                }
+                else if (code.equals(KeyCode.DOWN)) {
+                    if (x + 2 < 4)
+                        gv.getAnswers()[x + 2].requestFocus();
+                }
+                else if (code.equals(KeyCode.LEFT)) {
+                    if (x == 1 || x == 3)
+                        gv.getAnswers()[x - 1].requestFocus();
+                }
+                else if (code.equals(KeyCode.RIGHT)) {
+                    if (x == 1) {
+                        if (!model.getGameModel().getLifelinesUsed()[0])
+                            gv.getLifelines()[0].requestFocus();
+                        else if (!model.getGameModel().getLifelinesUsed()[1])
+                            gv.getLifelines()[1].requestFocus();
+                        else if (!model.getGameModel().getLifelinesUsed()[2])
+                            gv.getLifelines()[2].requestFocus();
+                        else
+                            gv.getResign().requestFocus();
+                    }
+                    else if (x == 3)
+                        gv.getResign().requestFocus();
+                    else {
+                        if (!gv.getAnswers()[x + 1].isDisabled())
+                            gv.getAnswers()[x + 1].requestFocus();
+                        else if (x == 0) {
+                            if (!gv.getLifelines()[0].isDisabled())
+                                gv.getLifelines()[0].requestFocus();
+                            else if (!gv.getLifelines()[1].isDisabled())
+                                gv.getLifelines()[1].requestFocus();
+                            else if (!gv.getLifelines()[2].isDisabled())
+                                gv.getLifelines()[2].requestFocus();
+                            else
+                                gv.getResign().requestFocus();
+                        }
+                        else
+                            gv.getResign().requestFocus();
+                    }
+                }
                 event.consume();
             });
 
@@ -183,33 +225,214 @@ public class Controller {
             event.consume();
         });
 
+        gv.getLifelines()[0].setOnKeyPressed((event) -> {
+            KeyCode code = event.getCode();
+            if (code.equals(KeyCode.ENTER)) {
+                gv.getLifelines()[0].setDisable(true);
+                model.lifeline5050();
+                model.playSongSingle("50_50.wav");
+            }
+            else if (code.equals(KeyCode.LEFT)) {
+                focusFromLifelinesToAnswers(gv);
+            }
+            else if (code.equals(KeyCode.RIGHT)) {
+                if (!gv.getLifelines()[1].isDisabled())
+                    gv.getLifelines()[1].requestFocus();
+                else if (!gv.getLifelines()[2].isDisabled())
+                    gv.getLifelines()[2].requestFocus();
+            }
+            else if (code.equals(KeyCode.DOWN))
+                gv.getResign().requestFocus();
+            event.consume();
+        });
+
         gv.getLifelines()[1].setOnAction((event) -> {
             gv.getLifelines()[1].setDisable(true);
-            model.lifelineFriend();
+            Boolean used5050 = false;
+            for (Button b : gv.getAnswers())
+                if (b.isDisabled()) {
+                    used5050 = true;
+                    break;
+                }
+            model.lifelineFriend(used5050);
+            event.consume();
+        });
+
+        gv.getLifelines()[1].setOnKeyPressed((event) -> {
+            KeyCode code = event.getCode();
+            if (code.equals(KeyCode.ENTER)) {
+                gv.getLifelines()[1].setDisable(true);
+                Boolean used5050 = false;
+                for (Button b : gv.getAnswers())
+                    if (b.isDisabled()) {
+                        used5050 = true;
+                        break;
+                    }
+                model.lifelineFriend(used5050);
+            }
+            else if (code.equals(KeyCode.LEFT)) {
+                if (!gv.getLifelines()[0].isDisabled())
+                    gv.getLifelines()[0].requestFocus();
+                else
+                    focusFromLifelinesToAnswers(gv);
+            }
+            else if (code.equals(KeyCode.RIGHT))
+                gv.getLifelines()[2].requestFocus();
+            else if (code.equals(KeyCode.DOWN))
+                gv.getResign().requestFocus();
             event.consume();
         });
 
         gv.getLifelines()[2].setOnAction((event) -> {
             gv.getLifelines()[2].setDisable(true);
-            model.lifelineAudience();
+            Boolean used5050 = false;
+            for (Button b : gv.getAnswers())
+                if (b.isDisabled()) {
+                    used5050 = true;
+                    break;
+                }
+            model.lifelineAudience(used5050);
+            event.consume();
+        });
+
+        gv.getLifelines()[2].setOnKeyPressed((event) -> {
+            KeyCode code = event.getCode();
+            if (code.equals(KeyCode.ENTER)) {
+                gv.getLifelines()[2].setDisable(true);
+                Boolean used5050 = false;
+                for (Button b : gv.getAnswers())
+                    if (b.isDisabled()) {
+                        used5050 = true;
+                        break;
+                    }
+                model.lifelineAudience(used5050);
+            }
+            else if (code.equals(KeyCode.LEFT)) {
+                if (!gv.getLifelines()[1].isDisabled())
+                    gv.getLifelines()[1].requestFocus();
+                else if (!gv.getLifelines()[0].isDisabled())
+                    gv.getLifelines()[0].requestFocus();
+                else
+                    focusFromLifelinesToAnswers(gv);
+            }
+            else if (code.equals(KeyCode.DOWN))
+                gv.getResign().requestFocus();
+            event.consume();
+        });
+
+        gv.getResign().setOnAction((event) -> {
+            resign(gv);
+            event.consume();
+        });
+
+        gv.getResign().setOnKeyPressed((event) -> {
+            KeyCode code = event.getCode();
+            if (code.equals(KeyCode.ENTER))
+                resign(gv);
+            else if (code.equals(KeyCode.LEFT)) {
+                if (!gv.getAnswers()[3].isDisabled())
+                    gv.getAnswers()[3].requestFocus();
+                else if (!gv.getAnswers()[2].isDisabled())
+                    gv.getAnswers()[2].requestFocus();
+                else
+                    gv.getAnswers()[1].requestFocus();
+            }
+            else if (code.equals(KeyCode.UP)) {
+                if (!model.getGameModel().getLifelinesUsed()[1])
+                    gv.getLifelines()[1].requestFocus();
+                else if (!model.getGameModel().getLifelinesUsed()[2])
+                    gv.getLifelines()[2].requestFocus();
+                else if (!model.getGameModel().getLifelinesUsed()[0])
+                    gv.getLifelines()[0].requestFocus();
+            }
             event.consume();
         });
     }
 
+    /**
+     * Defines reactions to user action in the end game view.
+     */
     private void setEndGameActions() {
         EndGameView egv = view.getEndGameView();
 
-        egv.getReturnToMain().setOnAction((event) -> {
-            view.getMainMenuView().resetState();
-            model.playSongLooped("level2Loop.wav");
-            view.setActiveScene(view.getMainMenuView().getScene());
+        egv.getReturnToMain().setOnAction((event) -> returnToMainMenu());
+
+        egv.getReturnToMain().setOnKeyPressed((event) -> {
+            KeyCode code = event.getCode();
+            if (code.equals(KeyCode.ENTER))
+                returnToMainMenu();
+            else if (code.equals(KeyCode.UP) || code.equals(KeyCode.DOWN))
+                egv.getRestartGame().requestFocus();
+            event.consume();
         });
 
-        egv.getRestartGame().setOnAction((event) -> {
-            startGame();
+        egv.getRestartGame().setOnAction((event) -> startGame());
+
+        egv.getRestartGame().setOnKeyPressed((event) -> {
+            KeyCode code = event.getCode();
+            if (code.equals(KeyCode.ENTER))
+                startGame();
+            else if (code.equals(KeyCode.UP) || code.equals(KeyCode.DOWN))
+                egv.getReturnToMain().requestFocus();
+            event.consume();
         });
     }
 
+    /**
+     * A method responsible for returning to main menu.
+     */
+    private void returnToMainMenu() {
+        view.getMainMenuView().resetState();
+        model.getSingle().stop();
+        model.getLooped().stop();
+        model.playSongLooped("level2Loop.wav");
+        view.setActiveScene(view.getMainMenuView().getScene());
+    }
+
+    /**
+     * A method describing what happens when the user resigns from further play.
+     * @param gv a {@link view.GameView} object at which the correct answer will be shown.
+     */
+    private void resign(GameView gv) {
+        Task task = new Task() {
+            @Override
+            protected Void call() {
+                try {
+                    model.getLooped().stop();
+                    model.playSongSingle("endGameResignation.wav");
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        Thread td = new Thread(task);
+        td.setDaemon(true);
+        td.start();
+        gv.setDisabledButtons(true, model.getGameModel().getLifelinesUsed());
+        for (Button ans : view.getGameView().getAnswers())
+            if (!ans.getText().equals("") && ans.getText().substring(3).equals(model.getGameModel().getCorrectAnswer())) {
+                ans.setId("correctAnswer");
+                break;
+            }
+        task.setOnSucceeded((endGameEvent) -> {
+            byte qc = model.getGameModel().getQuestionCounter();
+            if (qc != 0)
+                view.getEndGameView().getLabel().setText("Udało Ci się wygrać " + model.getGameModel().getMoney()[qc - 1] + " zł!");
+            else
+                view.getEndGameView().getLabel().setText("Zrezygnowałeś na pierwszym pytaniu! No nic - spróbuj jeszcze raz!");
+            view.setActiveScene(view.getEndGameView().getScene());
+            endGameEvent.consume();
+        });
+    }
+
+    /**
+     * A method checking if the selected answer is correct.
+     * @param gv a {@link view.GameView} object to set checked and/or correct answer and disable/enable buttons.
+     * @param b a button that was chosen and hat to have it's look changed.
+     */
     private void checkAnswer(GameView gv, Button b) {
         byte qc = model.getGameModel().getQuestionCounter();
         b.setId("selectedAnswer");
@@ -285,9 +508,11 @@ public class Controller {
                                     model.playSongLooped("level3Loop.wav");
                                 else
                                     model.playSongLooped("level3MillionQuestion.wav");
-                            } else {
+                            }
+                            else {
                                 model.getLooped().stop();
                                 model.playSongSingle("winMillion.wav");
+                                Thread.sleep(2000);
                             }
                         }
                         catch (InterruptedException e) {
@@ -328,6 +553,7 @@ public class Controller {
                                 model.playSongSingle("fail.wav");
                             while (model.getSingle().getFramePosition() < model.getSingle().getFrameLength())
                                 Thread.sleep(100);
+                            model.playSongSingle("endGame.wav");
                         }
                         catch (InterruptedException e) {
                             e.printStackTrace();
@@ -354,12 +580,16 @@ public class Controller {
                     else
                         view.getEndGameView().getLabel().setText("Udało Ci się wygrać 40000 zł!");
                     view.setActiveScene(view.getEndGameView().getScene());
+                    endGame.consume();
                 });
             }
             taskEvent.consume();
         });
     }
 
+    /**
+     * A method that starts a new game.
+     */
     private void startGame() {
             Task task = new Task() {
                 @Override
@@ -399,6 +629,9 @@ public class Controller {
             });
     }
 
+    /**
+     * A method that exits the app after closing the connection to the database.
+     */
     private void exitApp() {
         try {
             model.getDatabaseModel().getConnection().close();
@@ -410,6 +643,10 @@ public class Controller {
         }
     }
 
+    /**
+     * A method that selects the next question for the user.
+     * @param diff a difficulty of the question.
+     */
     private void selectQuestion(String diff) {
         String question = model.getDatabaseModel().selectQuestion(diff, model.getGameModel().getUsedID());
         view.getGameView().getQuestion().setText(question);
@@ -418,8 +655,23 @@ public class Controller {
         String[] answers = model.getDatabaseModel().selectAnswers(qid);
         model.getGameModel().setCorrectAnswer(model.getDatabaseModel().selectCorrectAnswer(qid));
         char ans = 'A';
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i) {
+            assert answers != null;
             view.getGameView().getAnswers()[i].setText(ans++ + ": " + answers[i]);
+        }
         model.getGameModel().getUsedID().add(qid);
+    }
+
+    /**
+     * A method that switches focus from lifelines to answers.
+     * @param gv a {@link view.GameView} object for which focus change is made.
+     */
+    private void focusFromLifelinesToAnswers(GameView gv) {
+        if (!gv.getAnswers()[1].isDisabled())
+            gv.getAnswers()[1].requestFocus();
+        else if (!gv.getAnswers()[0].isDisabled())
+            gv.getAnswers()[0].requestFocus();
+        else
+            gv.getAnswers()[3].requestFocus();
     }
 }
