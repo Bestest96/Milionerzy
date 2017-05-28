@@ -78,6 +78,7 @@ public final class AudienceView {
      * The method that displays the chart.
      */
     public void display() {
+        chartStage.setAlwaysOnTop(true);
         chartStage.show();
     }
 }

@@ -7,7 +7,7 @@ import view.View;
 /**
  * The {@link Main} class initializes the MVC and JavaFX components.
  * @author Lukasz Lepak
- * @version 1.3
+ * @version 1.3.1
  */
 public class Main extends Application {
     /**
@@ -22,7 +22,6 @@ public class Main extends Application {
         Model model = new Model(view);
         new Controller(model, view);
     }
-
     /**
      * The main method of the application tha initializes JavaFX.
      * @param args args from the console (not used).

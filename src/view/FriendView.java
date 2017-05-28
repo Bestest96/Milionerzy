@@ -50,6 +50,7 @@ public final class FriendView {
      * Displays the stage with friend's advise.
      */
     public void display() {
+        friendStage.setAlwaysOnTop(true);
         friendStage.show();
     }
 
