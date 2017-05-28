@@ -149,6 +149,42 @@ public class GameView {
     }
 
     /**
+     * Resets the state of the view in order to start again.
+     */
+    public void resetState() {
+        for (Button b : answers) {
+            b.setText("");
+            b.setId("gameButton");
+            b.setDisable(false);
+        }
+        for (Button b : lifelines)
+            b.setDisable(false);
+        for (Label l : money)
+            l.setId("moneyLabel");
+        resign.setDisable(false);
+        money[0].setId("currentQuestionLabel");
+        money[1].setId("guaranteedMoneyLabel");
+        money[6].setId("guaranteedMoneyLabel");
+        lifelines[0].setId("5050");
+        lifelines[1].setId("friend");
+        lifelines[2].setId("audience");
+    }
+
+    /**
+     * Sets the disabled status for buttons.
+     * @param disable true or false - whether the buttons should be disabled or not.
+     * @param disableLifelines an array of booleans describing whether lifeline buttons should be affected.
+     */
+    public void setDisabledButtons(Boolean disable, Boolean[] disableLifelines) {
+        for (Button b : answers)
+            b.setDisable(disable);
+        for (int i = 0 ; i < 3 ; ++i)
+            if (!disableLifelines[i])
+                lifelines[i].setDisable(disable);
+        resign.setDisable(disable);
+    }
+
+    /**
      * Creates an answer button with the appropriate style.
      * @return a created answer button.
      */
@@ -191,41 +227,4 @@ public class GameView {
         text.setPadding(new Insets(0, 100, 0, 100));
         return text;
     }
-
-    /**
-     * Resets the state of the view in order to start again.
-     */
-    public void resetState() {
-        for (Button b : answers) {
-            b.setText("");
-            b.setId("gameButton");
-            b.setDisable(false);
-        }
-        for (Button b : lifelines)
-            b.setDisable(false);
-        for (Label l : money)
-            l.setId("moneyLabel");
-        resign.setDisable(false);
-        money[0].setId("currentQuestionLabel");
-        money[1].setId("guaranteedMoneyLabel");
-        money[6].setId("guaranteedMoneyLabel");
-        lifelines[0].setId("5050");
-        lifelines[1].setId("friend");
-        lifelines[2].setId("audience");
-    }
-
-    /**
-     * Sets the disabled status for buttons.
-     * @param disable true or false - whether the buttons should be disabled or not.
-     * @param disableLifelines an array of booleans describing whether lifeline buttons should be affected.
-     */
-    public void setDisabledButtons(Boolean disable, Boolean[] disableLifelines) {
-        for (Button b : answers)
-            b.setDisable(disable);
-        for (int i = 0 ; i < 3 ; ++i)
-            if (!disableLifelines[i])
-                lifelines[i].setDisable(disable);
-        resign.setDisable(disable);
-}
-
 }

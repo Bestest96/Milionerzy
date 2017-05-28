@@ -75,14 +75,6 @@ public final class GameModel {
     }
 
     /**
-     * A getter for the resign button label.
-     * @return the resign button label.
-     */
-    String getResign() {
-        return resign;
-    }
-
-    /**
      * A getter for used lifelines.
      * @return an array of booleans indicating used lifelines.
      */
@@ -132,4 +124,13 @@ public final class GameModel {
         for (int i = 0; i < 3; ++i)
             lifelinesUsed[i] = false;
     }
+
+    /**
+     * A getter for the resign button label.
+     * @return the resign button label.
+     */
+    String getResign() {
+        return resign;
+    }
+
 }

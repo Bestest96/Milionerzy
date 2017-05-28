@@ -111,23 +111,6 @@ public final class Model {
     }
 
     /**
-     * Creates a clip that is ready to play a track.
-     * @param filename a file to be loaded to a clip.
-     * @return  a clip ready for playing a track.
-     * @throws LineUnavailableException when clip operations fail.
-     * @throws IOException when a track cannot be loaded (i.e. bad path).
-     * @throws UnsupportedAudioFileException when the audio file is unsupported.
-     * @throws ClassNotFoundException when class Main is not found.
-     */
-    private Clip prepareClip(String filename) throws LineUnavailableException, IOException, UnsupportedAudioFileException, ClassNotFoundException {
-        Clip clip;
-        clip = AudioSystem.getClip();
-        AudioInputStream inputStream = AudioSystem.getAudioInputStream(Class.forName("Main").getResource(filename));
-        clip.open(inputStream);
-        return clip;
-    }
-
-    /**
      * A getter for a {@link model.DatabaseModel} object containing database-related data.
      * @return a {@link model.DatabaseModel} object.
      */
@@ -185,48 +168,6 @@ public final class Model {
                 diff = this.addQuestionModel.getDiff()[i].substring(0, 1);
         return diff;
     }
-    /**
-     * Sets the main menu view (button labels).
-     */
-    private void setMainMenuView() {
-        MainMenuView mmv = view.getMainMenuView();
-        MainMenuModel mmm = this.mainMenuModel;
-        mmv.getPlayButton().setText(mmm.getPlayText());
-        mmv.getAddQuestionButton().setText(mmm.getAddQText());
-        mmv.getExitButton().setText((mmm.getExitText()));
-    }
-    /**
-     * Sets the add question view (button labels).
-     */
-    private void setAddQuestionView() {
-        AddQuestionView aqv = view.getAddQuestionView();
-        AddQuestionModel aqm = this.addQuestionModel;
-        aqv.getAddToDBButton().setText(aqm.getAddToDBText());
-        aqv.getReturnToMainButton().setText(aqm.getReturnToMenuText());
-        for (int i = 0; i < 3; ++i)
-            aqv.getDiff()[i].setText(aqm.getDiff()[i]);
-    }
-
-    /**
-     * Sets the game view (money labels and resign button label).
-     */
-    private void setGameView() {
-        GameView gv = view.getGameView();
-        GameModel gm = this.gameModel;
-        for (int i = 0; i < 12; ++i)
-            gv.getMoney()[i].setText(gm.getMoney()[i] + " zł");
-        gv.getResign().setText(gm.getResign());
-    }
-
-    /**
-     * Sets the end game view (button labels).
-     */
-    private void setEndGameView() {
-        EndGameView egv = view.getEndGameView();
-        EndGameModel egm = this.endGameModel;
-        egv.getReturnToMain().setText(egm.getReturnToMain());
-        egv.getRestartGame().setText(egm.getRestartGame());
-    }
 
     /**
      * Generates and uses the lifeline 50/50 in the game.
@@ -277,7 +218,6 @@ public final class Model {
         }
         view.getFriendView().setFriendHelp(help);
         view.getFriendView().display();
-
     }
 
     /**
@@ -319,5 +259,68 @@ public final class Model {
             av.getSeries().getData().add(new XYChart.Data<>(audienceModel.getAnswers()[i], audienceModel.getPercents()[i]));
         av.getPoll().getData().add(av.getSeries());
         av.display();
+        av.getChartStage().getScene().getRoot().requestFocus();
     }
+
+    /**
+     * Creates a clip that is ready to play a track.
+     * @param filename a file to be loaded to a clip.
+     * @return  a clip ready for playing a track.
+     * @throws LineUnavailableException when clip operations fail.
+     * @throws IOException when a track cannot be loaded (i.e. bad path).
+     * @throws UnsupportedAudioFileException when the audio file is unsupported.
+     * @throws ClassNotFoundException when class Main is not found.
+     */
+    private Clip prepareClip(String filename) throws LineUnavailableException, IOException, UnsupportedAudioFileException, ClassNotFoundException {
+        Clip clip;
+        clip = AudioSystem.getClip();
+        AudioInputStream inputStream = AudioSystem.getAudioInputStream(Class.forName("Main").getResource(filename));
+        clip.open(inputStream);
+        return clip;
+    }
+
+    /**
+     * Sets the main menu view (button labels).
+     */
+    private void setMainMenuView() {
+        MainMenuView mmv = view.getMainMenuView();
+        MainMenuModel mmm = this.mainMenuModel;
+        mmv.getPlayButton().setText(mmm.getPlayText());
+        mmv.getAddQuestionButton().setText(mmm.getAddQText());
+        mmv.getExitButton().setText((mmm.getExitText()));
+    }
+    /**
+     * Sets the add question view (button labels).
+     */
+    private void setAddQuestionView() {
+        AddQuestionView aqv = view.getAddQuestionView();
+        AddQuestionModel aqm = this.addQuestionModel;
+        aqv.getAddToDBButton().setText(aqm.getAddToDBText());
+        aqv.getReturnToMainButton().setText(aqm.getReturnToMenuText());
+        for (int i = 0; i < 3; ++i)
+            aqv.getDiff()[i].setText(aqm.getDiff()[i]);
+    }
+
+    /**
+     * Sets the game view (money labels and resign button label).
+     */
+    private void setGameView() {
+        GameView gv = view.getGameView();
+        GameModel gm = this.gameModel;
+        for (int i = 0; i < 12; ++i)
+            gv.getMoney()[i].setText(gm.getMoney()[i] + " zł");
+        gv.getResign().setText(gm.getResign());
+    }
+
+    /**
+     * Sets the end game view (button labels).
+     */
+    private void setEndGameView() {
+        EndGameView egv = view.getEndGameView();
+        EndGameModel egm = this.endGameModel;
+        egv.getReturnToMain().setText(egm.getReturnToMain());
+        egv.getRestartGame().setText(egm.getRestartGame());
+    }
+
+
 }

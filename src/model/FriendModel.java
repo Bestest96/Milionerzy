@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -28,6 +27,15 @@ final class FriendModel {
         texts.add("Wydaje mi się, że jest to odpowiedź ");
         texts.add("To na pewno jest odpowiedź ");
         texts.add("Strzelałbym ");
+        texts.add("Nie jestem pewien, ale wybrałbym odpowiedź ");
+        texts.add("Coś mi mówi, że to będzie ");
+        texts.add("Zaufaj mi - to jest odpowiedź ");
+        texts.add("Skoro muszę coś powiedzieć, to wybiorę odpowiedż ");
+        texts.add("Nie jestem w tej dziedzinie ekspertem, ale możesz zaznaczyć ");
+        texts.add("Hmm, nie dam sobie głowy za to ściąć, ale wybrałbym ");
+        texts.add("Nie wiem, wybrałbym ");
+        texts.add("Weź odpowiedź ");
+        texts.add("Zaznacz odpowiedź ");
     }
 
     /**
@@ -81,7 +89,8 @@ final class FriendModel {
      * @return a char representing the chosen answer.
      */
     private char returnChosenAnswer(int correctIndex, int questionCounter, Boolean is5050Used, int otherAns) {
-        Arrays.stream(probabilities).forEach(i -> i = 0);
+        for (int i = 0; i < 4; ++i)
+            probabilities[i] = 0;
         int toDistribute = 100;
         probabilities[correctIndex] = 44 - 4 * questionCounter;
         toDistribute -= 44 - 4 * questionCounter;

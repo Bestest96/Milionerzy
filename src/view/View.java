@@ -70,17 +70,7 @@ public final class View {
      */
     public void setActiveScene (Scene scene) {
         stage.setScene(scene);
-        stage.setAlwaysOnTop(true);
         stage.show();
-    }
-
-    /**
-     * Sets the dimensions of the application's window.
-     */
-    private void setDimensions() {
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        stage.setWidth(dimension.getWidth());
-        stage.setHeight(dimension.getHeight());
     }
 
     /**
@@ -144,4 +134,12 @@ public final class View {
         return stage;
     }
 
+    /**
+     * Sets the dimensions of the application's window.
+     */
+    private void setDimensions() {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        stage.setWidth(dimension.getWidth());
+        stage.setHeight(dimension.getHeight());
+    }
 }

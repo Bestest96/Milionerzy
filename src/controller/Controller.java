@@ -35,6 +35,8 @@ public final class Controller {
         setAddQuestionActions();
         setGameActions();
         setEndGameActions();
+        setFriendActions();
+        setAudienceActions();
     }
 
     /**
@@ -172,16 +174,39 @@ public final class Controller {
                 if (code.equals(KeyCode.ENTER))
                     checkAnswer(gv, b);
                 else if (code.equals(KeyCode.UP)) {
-                    if (x - 2 >= 0)
-                        gv.getAnswers()[x - 2].requestFocus();
+                    if (x - 2 >= 0) {
+                        if (!gv.getAnswers()[x - 2].isDisabled())
+                            gv.getAnswers()[x - 2].requestFocus();
+                        else {
+                            if (x == 2)
+                                if (!gv.getAnswers()[1].isDisabled())
+                                    gv.getAnswers()[1].requestFocus();
+                                if (x == 3)
+                                    if (!gv.getAnswers()[0].isDisabled())
+                                        gv.getAnswers()[0].requestFocus();
+                        }
+                    }
                 }
                 else if (code.equals(KeyCode.DOWN)) {
-                    if (x + 2 < 4)
-                        gv.getAnswers()[x + 2].requestFocus();
+                    if (x + 2 < 4) {
+                        if (!gv.getAnswers()[x + 2].isDisabled())
+                            gv.getAnswers()[x + 2].requestFocus();
+                        else {
+                            if (x == 1)
+                                if (!gv.getAnswers()[2].isDisabled())
+                                    gv.getAnswers()[2].requestFocus();
+                            if (x == 0)
+                                if (!gv.getAnswers()[3].isDisabled())
+                                    gv.getAnswers()[3].requestFocus();
+                        }
+                    }
                 }
                 else if (code.equals(KeyCode.LEFT)) {
                     if (x == 1 || x == 3)
-                        gv.getAnswers()[x - 1].requestFocus();
+                        if (!gv.getAnswers()[(x - 1) % 4].isDisabled())
+                            gv.getAnswers()[(x - 1) % 4].requestFocus();
+                        else if (!gv.getAnswers()[(x + 1) % 4].isDisabled())
+                            gv.getAnswers()[(x + 1) % 4].requestFocus();
                 }
                 else if (code.equals(KeyCode.RIGHT)) {
                     if (x == 1) {
@@ -199,7 +224,13 @@ public final class Controller {
                     else {
                         if (!gv.getAnswers()[x + 1].isDisabled())
                             gv.getAnswers()[x + 1].requestFocus();
+                        else if (x == 0 && !gv.getAnswers()[3].isDisabled())
+                            gv.getAnswers()[3].requestFocus();
+                        else if (x == 2 && !gv.getAnswers()[1].isDisabled())
+                            gv.getAnswers()[1].requestFocus();
                         else if (x == 0) {
+                            if (!gv.getAnswers()[3].isDisabled())
+                                gv.getAnswers()[3].requestFocus();
                             if (!gv.getLifelines()[0].isDisabled())
                                 gv.getLifelines()[0].requestFocus();
                             else if (!gv.getLifelines()[1].isDisabled())
@@ -297,6 +328,7 @@ public final class Controller {
                     break;
                 }
             model.lifelineAudience(used5050);
+            setAudienceActions();
             event.consume();
         });
 
@@ -312,6 +344,7 @@ public final class Controller {
                         break;
                     }
                 model.lifelineAudience(used5050);
+                setAudienceActions();
             }
             else if (code.equals(KeyCode.LEFT)) {
                 if (!gv.getLifelines()[1].isDisabled())
@@ -372,7 +405,10 @@ public final class Controller {
             event.consume();
         });
 
-        egv.getRestartGame().setOnAction((event) -> startGame());
+        egv.getRestartGame().setOnAction((event) -> {
+            startGame();
+            event.consume();
+        });
 
         egv.getRestartGame().setOnKeyPressed((event) -> {
             KeyCode code = event.getCode();
@@ -380,6 +416,34 @@ public final class Controller {
                 startGame();
             else if (code.equals(KeyCode.UP) || code.equals(KeyCode.DOWN))
                 egv.getReturnToMain().requestFocus();
+            event.consume();
+        });
+    }
+
+    /**
+     * Defines reactions to user action in the friend view.
+     */
+    private void setFriendActions() {
+        FriendView fv = view.getFriendView();
+
+        fv.getFriendStage().getScene().setOnKeyPressed((event) -> {
+            KeyCode code = event.getCode();
+            if (code.equals(KeyCode.ESCAPE) || code.equals(KeyCode.ENTER))
+                fv.getFriendStage().close();
+            event.consume();
+        });
+    }
+
+    /**
+     * Defines reactions to user action in the audience view.
+     */
+    private void setAudienceActions() {
+        AudienceView av = view.getAudienceView();
+
+        av.getChartStage().getScene().setOnKeyPressed((event) -> {
+            KeyCode code = event.getCode();
+            if (code.equals(KeyCode.ESCAPE) || code.equals(KeyCode.ENTER))
+                av.getChartStage().close();
             event.consume();
         });
     }
@@ -656,9 +720,9 @@ public final class Controller {
      * @param diff a difficulty of the question.
      */
     private void selectQuestion(String diff) {
+        model.getDatabaseModel().checkConnection();
         String question = model.getDatabaseModel().selectQuestion(diff, model.getGameModel().getUsedID());
         view.getGameView().getQuestion().setText(question);
-        model.getDatabaseModel().checkConnection();
         int qid = model.getDatabaseModel().getQuestionID(question);
         String[] answers = model.getDatabaseModel().selectAnswers(qid);
         model.getGameModel().setCorrectAnswer(model.getDatabaseModel().selectCorrectAnswer(qid));

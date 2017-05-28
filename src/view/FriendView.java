@@ -31,9 +31,7 @@ public final class FriendView {
         friendHelp.setWrapText(true);
         sp.setAlignment(Pos.CENTER);
         sp.getChildren().add(friendHelp);
-        //sp.setId("friendScene");
         Scene scene = new Scene(sp, 500, 200);
-        //scene.getStylesheets().add("Scene.css");
         friendStage.setScene(scene);
         friendStage.setResizable(false);
     }
@@ -50,7 +48,6 @@ public final class FriendView {
      * Displays the stage with friend's advise.
      */
     public void display() {
-        friendStage.setAlwaysOnTop(true);
         friendStage.show();
     }
 

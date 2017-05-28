@@ -30,6 +30,22 @@ final class AudienceModel {
     }
 
     /**
+     * A getter for answer labels.
+     * @return an array of answer labels.
+     */
+    String[] getAnswers() {
+        return answers;
+    }
+
+    /**
+     * A getter for percents.
+     * @return an array of percents.
+     */
+    int[] getPercents() {
+        return percents;
+    }
+
+    /**
      * A method that calls {@link model.AudienceModel#setPercents(int, int, int, Boolean)} when 50/50 is not used.
      * @param correctIndex an index of the correct question.
      * @param questionCounter an actual question counter (in range from 0 to 11).
@@ -74,21 +90,5 @@ final class AudienceModel {
             toDistribute -= x;
         }
         percents[3] += toDistribute;
-}
-
-    /**
-     * A getter for answer labels.
-     * @return an array of answer labels.
-     */
-    String[] getAnswers() {
-        return answers;
-    }
-
-    /**
-     * A getter for percents.
-     * @return an array of percents.
-     */
-    int[] getPercents() {
-        return percents;
     }
 }

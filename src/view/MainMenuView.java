@@ -55,17 +55,6 @@ public final class MainMenuView {
     }
 
     /**
-     * Sets the style of button in the main menu.
-     * @param btn a button to be "styled".
-     */
-    private void setButtonStyle(Button btn) {
-        btn.getStylesheets().add("Button.css");
-        btn.setId("menuButton");
-        btn.setPrefWidth(View.getStage().getWidth()/2.0);
-        btn.setPrefHeight(View.getStage().getHeight()/6.0);
-    }
-
-    /**
      * A getter for the main menu scene.
      * @return the main menu scene.
      */
@@ -97,4 +86,14 @@ public final class MainMenuView {
         return exit;
     }
 
+    /**
+     * Sets the style of button in the main menu.
+     * @param btn a button to be "styled".
+     */
+    private void setButtonStyle(Button btn) {
+        btn.getStylesheets().add("Button.css");
+        btn.setId("menuButton");
+        btn.setPrefWidth(View.getStage().getWidth()/2.0);
+        btn.setPrefHeight(View.getStage().getHeight()/6.0);
+    }
 }

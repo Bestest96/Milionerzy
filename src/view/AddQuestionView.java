@@ -121,6 +121,29 @@ public final class AddQuestionView {
     }
 
     /**
+     * A getter for the add question scene.
+     * @return the add question scene.
+     */
+    public Scene getScene() {
+        return scene;
+    }
+    /**
+     * A getter for return to main menu button.
+     * @return the return to main menu button.
+     */
+    public Button getReturnToMainButton() {
+        return returnToMain;
+    }
+
+    /**
+     * A getter for add a question to a database button.
+     * @return the add question to a database button.
+     */
+    public Button getAddToDBButton() {
+        return addToDB;
+    }
+
+    /**
      * Creates a new {@link TextField} object for an answer and formats it to the stage's size.
      * @return a {@link TextField} object for an answer.
      */
@@ -157,28 +180,4 @@ public final class AddQuestionView {
         rb.setPrefHeight(View.getStage().getHeight()/18.0);
         return rb;
     }
-
-    /**
-     * A getter for the add question scene.
-     * @return the add question scene.
-     */
-    public Scene getScene() {
-        return scene;
-    }
-    /**
-     * A getter for return to main menu button.
-     * @return the return to main menu button.
-     */
-    public Button getReturnToMainButton() {
-        return returnToMain;
-    }
-
-    /**
-     * A getter for add a question to a database button.
-     * @return the add question to a database button.
-     */
-    public Button getAddToDBButton() {
-        return addToDB;
-    }
-
 }

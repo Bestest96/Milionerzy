@@ -5,6 +5,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -45,7 +46,9 @@ public final class AudienceView {
         yAxis.setLowerBound(0);
         yAxis.setUpperBound(100);
         poll.setAnimated(false);
-        Scene scene = new Scene(poll, 400, 400);
+        StackPane root = new StackPane();
+        root.getChildren().add(poll);
+        Scene scene = new Scene(root, 400, 400);
         chartStage.setScene(scene);
         chartStage.setResizable(false);
     }
@@ -78,7 +81,6 @@ public final class AudienceView {
      * The method that displays the chart.
      */
     public void display() {
-        chartStage.setAlwaysOnTop(true);
         chartStage.show();
     }
 }

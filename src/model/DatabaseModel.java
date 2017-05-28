@@ -29,15 +29,6 @@ public final class DatabaseModel {
     }
 
     /**
-     * Tries to connect to the database.
-     * @throws SQLException when connection fails.
-     */
-    private void connect() throws SQLException {
-            connection = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@ora3.elka.pw.edu.pl:1521:ora3inf", "llepak", "llepak");
-    }
-
-    /**
      * A getter for the database connection.
      * @return the actual database connection.
      */
@@ -212,6 +203,15 @@ public final class DatabaseModel {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    /**
+     * Tries to connect to the database.
+     * @throws SQLException when connection fails.
+     */
+    private void connect() throws SQLException {
+            connection = DriverManager.getConnection(
+                    "jdbc:oracle:thin:@ora3.elka.pw.edu.pl:1521:ora3inf", "llepak", "llepak");
     }
 
     /**
