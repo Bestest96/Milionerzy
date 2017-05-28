@@ -220,6 +220,7 @@ public final class Controller {
 
         gv.getLifelines()[0].setOnAction((event) -> {
             gv.getLifelines()[0].setDisable(true);
+            gv.getLifelines()[0].setId("used5050");
             model.lifeline5050();
             model.playSongSingle("50_50.wav");
             event.consume();
@@ -229,6 +230,7 @@ public final class Controller {
             KeyCode code = event.getCode();
             if (code.equals(KeyCode.ENTER)) {
                 gv.getLifelines()[0].setDisable(true);
+                gv.getLifelines()[0].setId("used5050");
                 model.lifeline5050();
                 model.playSongSingle("50_50.wav");
             }
@@ -248,6 +250,7 @@ public final class Controller {
 
         gv.getLifelines()[1].setOnAction((event) -> {
             gv.getLifelines()[1].setDisable(true);
+            gv.getLifelines()[1].setId("usedFriend");
             Boolean used5050 = false;
             for (Button b : gv.getAnswers())
                 if (b.isDisabled()) {
@@ -262,6 +265,7 @@ public final class Controller {
             KeyCode code = event.getCode();
             if (code.equals(KeyCode.ENTER)) {
                 gv.getLifelines()[1].setDisable(true);
+                gv.getLifelines()[1].setId("usedFriend");
                 Boolean used5050 = false;
                 for (Button b : gv.getAnswers())
                     if (b.isDisabled()) {
@@ -285,6 +289,7 @@ public final class Controller {
 
         gv.getLifelines()[2].setOnAction((event) -> {
             gv.getLifelines()[2].setDisable(true);
+            gv.getLifelines()[2].setId("usedAudience");
             Boolean used5050 = false;
             for (Button b : gv.getAnswers())
                 if (b.isDisabled()) {
@@ -299,6 +304,7 @@ public final class Controller {
             KeyCode code = event.getCode();
             if (code.equals(KeyCode.ENTER)) {
                 gv.getLifelines()[2].setDisable(true);
+                gv.getLifelines()[2].setId("usedAudience");
                 Boolean used5050 = false;
                 for (Button b : gv.getAnswers())
                     if (b.isDisabled()) {
@@ -408,15 +414,17 @@ public final class Controller {
                 return null;
             }
         };
-        Thread td = new Thread(task);
-        td.setDaemon(true);
-        td.start();
         gv.setDisabledButtons(true, model.getGameModel().getLifelinesUsed());
         for (Button ans : view.getGameView().getAnswers())
             if (!ans.getText().equals("") && ans.getText().substring(3).equals(model.getGameModel().getCorrectAnswer())) {
                 ans.setId("correctAnswer");
                 break;
             }
+
+        Thread td = new Thread(task);
+        td.setDaemon(true);
+        td.start();
+
         task.setOnSucceeded((endGameEvent) -> {
             byte qc = model.getGameModel().getQuestionCounter();
             if (qc != 0)
@@ -562,15 +570,15 @@ public final class Controller {
                     }
                 };
 
-                Thread thread = new Thread(badAnswer);
-                thread.setDaemon(true);
-                thread.start();
-
                 for (Button ans : view.getGameView().getAnswers())
                     if (!ans.getText().equals("") && ans.getText().substring(3).equals(model.getGameModel().getCorrectAnswer())) {
                         ans.setId("correctAnswer");
                         break;
                     }
+
+                Thread thread = new Thread(badAnswer);
+                thread.setDaemon(true);
+                thread.start();
 
                 badAnswer.setOnSucceeded((endGame) -> {
                     if (qc < 2)
@@ -607,14 +615,14 @@ public final class Controller {
                     return null;
                 }
             };
-            Thread td = new Thread(task);
-            td.setDaemon(true);
-            td.start();
             view.getMainMenuView().getAddQuestionButton().setDisable(true);
             view.getMainMenuView().getExitButton().setDisable(true);
             view.getMainMenuView().getPlayButton().setDisable(true);
             view.getEndGameView().getRestartGame().setDisable(true);
             view.getEndGameView().getReturnToMain().setDisable(true);
+            Thread td = new Thread(task);
+            td.setDaemon(true);
+            td.start();
             task.setOnSucceeded((event) -> {
                 model.playSongLooped("level1Loop.wav");
                 model.getGameModel().resetState();

@@ -250,6 +250,10 @@ public final class Model {
      */
     public void lifelineFriend(Boolean used5050) {
         gameModel.getLifelinesUsed()[1] = true;
+        if (view.getFriendView().getFriendStage().isShowing())
+            view.getFriendView().getFriendStage().close();
+        if (view.getAudienceView().getChartStage().isShowing())
+            view.getAudienceView().getChartStage().close();
         int correctIndex = -1;
         for (int i = 0; i < 4; ++i) {
             Boolean disabled = view.getGameView().getAnswers()[i].isDisabled();
@@ -282,6 +286,10 @@ public final class Model {
      */
     public void lifelineAudience(Boolean used5050) {
         gameModel.getLifelinesUsed()[2] = true;
+        if (view.getAudienceView().getChartStage().isShowing())
+            view.getAudienceView().getChartStage().close();
+        if (view.getFriendView().getFriendStage().isShowing())
+            view.getFriendView().getFriendStage().close();
         for (int i = 0; i < 4; ++i)
             audienceModel.getPercents()[i] = 0;
         AudienceView av = new AudienceView();

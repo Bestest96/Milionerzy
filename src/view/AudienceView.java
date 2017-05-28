@@ -48,7 +48,6 @@ public final class AudienceView {
         Scene scene = new Scene(poll, 400, 400);
         chartStage.setScene(scene);
         chartStage.setResizable(false);
-        chartStage.setAlwaysOnTop(true);
     }
 
     /**
@@ -68,9 +67,17 @@ public final class AudienceView {
     }
 
     /**
+     * A getter for the audience view stage,
+     * @return the audience view stage.
+     */
+    public Stage getChartStage() {
+        return chartStage;
+    }
+
+    /**
      * The method that displays the chart.
      */
     public void display() {
-        chartStage.showAndWait();
+        chartStage.show();
     }
 }

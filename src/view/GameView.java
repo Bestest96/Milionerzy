@@ -75,11 +75,12 @@ public class GameView {
             lifelines[i] = new Button();
             lifelines[i].setPrefWidth(View.getStage().getWidth()/9.0);
             lifelines[i].setPrefHeight(View.getStage().getHeight()/15.0);
+            lifelines[i].getStylesheets().add("Button.css");
             helps.getChildren().add(lifelines[i]);
         }
-        lifelines[0].setText("50/50");
-        lifelines[1].setText("Telefon");
-        lifelines[2].setText("Publiczność");
+        lifelines[0].setId("5050");
+        lifelines[1].setId("friend");
+        lifelines[2].setId("audience");
         info.getChildren().add(helps);
         money = new Label[12];
         for (int i = 11; i >= 0; --i) {
@@ -208,6 +209,9 @@ public class GameView {
         money[0].setId("currentQuestionLabel");
         money[1].setId("guaranteedMoneyLabel");
         money[6].setId("guaranteedMoneyLabel");
+        lifelines[0].setId("5050");
+        lifelines[1].setId("friend");
+        lifelines[2].setId("audience");
     }
 
     /**

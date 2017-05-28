@@ -35,7 +35,6 @@ public final class FriendView {
         Scene scene = new Scene(sp, 500, 200);
         //scene.getStylesheets().add("Scene.css");
         friendStage.setScene(scene);
-        friendStage.setAlwaysOnTop(true);
         friendStage.setResizable(false);
     }
 
@@ -51,6 +50,14 @@ public final class FriendView {
      * Displays the stage with friend's advise.
      */
     public void display() {
-        friendStage.showAndWait();
+        friendStage.show();
+    }
+
+    /**
+     * A getter for the friend view stage.
+     * @return the friend view stage.
+     */
+    public Stage getFriendStage() {
+        return friendStage;
     }
 }

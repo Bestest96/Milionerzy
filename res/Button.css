@@ -25,4 +25,61 @@
     -fx-background-image: url("mz.png");
 }
 
+#5050 {
+    -fx-background-image: url("5050.png");
+    -fx-background-size: 50%;
+}
+
+#5050:focused {
+    -fx-background-image: url("5050p.png");
+}
+
+#5050:hover {
+    -fx-background-image: url("5050z.png");
+}
+
+#friend {
+    -fx-background-image: url("friend.png");
+    -fx-background-size: 50%;
+}
+
+#friend:focused {
+    -fx-background-image: url("friendp.png");
+}
+
+#friend:hover {
+    -fx-background-image: url("friendz.png");
+}
+
+#audience {
+    -fx-background-image: url("audience.png");
+    -fx-background-size: 50%;
+}
+
+#audience:focused {
+    -fx-background-image: url("audiencep.png");
+}
+
+#audience:hover {
+    -fx-background-image: url("audiencez.png");
+}
+
+#used5050 {
+    -fx-background-image: url("5050.png");
+    -fx-opacity: 0.3;
+    -fx-background-size: 50%;
+}
+
+#usedFriend {
+    -fx-background-image: url("friend.png");
+    -fx-opacity: 0.3;
+    -fx-background-size: 50%;
+}
+
+#usedAudience {
+    -fx-background-image: url("audience.png");
+    -fx-opacity: 0.3;
+    -fx-background-size: 50%;
+}
+
 
